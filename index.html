@@ -35,6 +35,34 @@
   .hearts{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
   .heart{position:absolute; bottom:-40px; opacity:0; animation:float linear infinite}
   @keyframes float{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:.55}90%{opacity:.35}100%{transform:translateY(-112vh) rotate(40deg);opacity:0}}
+  /* roaming robots */
+  .bots{position:fixed;inset:0;z-index:6;pointer-events:none;overflow:hidden}
+  .bot{position:absolute;font-size:30px;filter:drop-shadow(0 8px 10px rgba(255,45,116,.55));will-change:transform}
+  .bot .b2{display:inline-block;animation:botbob .7s ease-in-out infinite}
+  .bot .load{position:absolute;top:-22px;left:50%;font-size:16px;animation:botload 1s ease-in-out infinite}
+  .bot .spark{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);font-size:11px;opacity:.7;animation:botbob .5s ease-in-out infinite}
+  @keyframes walk{0%{transform:translateX(-12vw)}100%{transform:translateX(112vw)}}
+  @keyframes walkrev{0%{transform:translateX(112vw)}100%{transform:translateX(-12vw)}}
+  @keyframes botbob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-8px) rotate(4deg)}}
+  @keyframes botload{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-5px)}}
+  /* office floor */
+  .floor{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+  .desk{position:relative;padding:12px 10px 11px;border-radius:16px;text-align:center;overflow:hidden;
+    background:linear-gradient(180deg,rgba(255,214,228,.07),rgba(28,7,20,.5));border:1px solid var(--line)}
+  .desk .work{position:absolute;top:9px;right:9px;display:flex;gap:3px;z-index:2}
+  .desk .work span{width:3px;height:3px;border-radius:50%;background:var(--rose-soft);animation:botload .9s infinite}
+  .desk .work span:nth-child(2){animation-delay:.2s}.desk .work span:nth-child(3){animation-delay:.4s}
+  .desk .screen{height:48px;border-radius:9px;position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#43183a,#1c0714);border:1px solid var(--line);box-shadow:inset 0 0 20px rgba(255,45,116,.35)}
+  .desk .screen .code{position:absolute;left:7px;top:6px;right:7px;text-align:left;font-family:ui-monospace,monospace;
+    font-size:7px;line-height:1.55;color:var(--rose-soft);opacity:.85}
+  .desk .screen::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,156,189,.12) 0 2px,transparent 2px 6px);animation:scan 2.4s linear infinite}
+  @keyframes scan{to{background-position:0 18px}}
+  .desk .seat{font-size:28px;margin-top:-2px;display:inline-block;animation:botbob .8s ease-in-out infinite}
+  .desk .desktop{height:6px;margin:-3px auto 0;width:70%;border-radius:3px;background:linear-gradient(90deg,transparent,rgba(232,195,126,.5),transparent)}
+  .desk .plate{font-size:10px;color:#ffd9e4cc;margin-top:6px;line-height:1.3}
+  .desk .plate b{color:var(--gold2)}
+  .desk .prop{position:absolute;bottom:9px;left:9px;font-size:12px;opacity:.75}
 
   .wrap{position:relative; z-index:2; max-width:1340px; margin:0 auto; padding:28px 26px 70px}
 
@@ -173,6 +201,7 @@
 </head>
 <body>
 <div class="hearts" id="hearts"></div>
+<div class="bots" id="bots"></div>
 <div class="wrap">
 
   <header>
@@ -281,6 +310,12 @@
     </div>
   </div>
 
+  <section class="panel" style="margin-top:20px">
+    <h2>🏢 The Office Floor</h2>
+    <div class="cap">the bots — heads down, working 24/7</div>
+    <div class="floor" id="floor"></div>
+  </section>
+
   <footer>Inas X 🤍 Certified Lover Girls · built to run itself</footer>
 </div>
 
@@ -290,6 +325,18 @@ const H=document.getElementById('hearts'),G=['🤍','💗','💕','🩷','✨','
 for(let i=0;i<18;i++){const h=document.createElement('div');h.className='heart';h.textContent=G[i%G.length];
   h.style.left=Math.random()*100+'%';h.style.animationDuration=(10+Math.random()*12)+'s';
   h.style.animationDelay=(-Math.random()*16)+'s';h.style.fontSize=(12+Math.random()*16)+'px';H.appendChild(h);}
+
+/* roaming robots — walking the office halls */
+const BT=document.getElementById('bots'),carry=['🎬','💖','🎀','🎶','📸','📁','✨'];
+function spawnBot(){const bot=document.createElement('div');bot.className='bot';
+  const dir=Math.random()<.5?1:-1, dur=15+Math.random()*16;
+  bot.style.top=(58+Math.random()*34)+'%';
+  bot.style.animation=`${dir>0?'walk':'walkrev'} ${dur}s linear forwards`;
+  bot.innerHTML=`<span class="b2" style="${dir>0?'':'transform:scaleX(-1)'}">🤖</span>
+    <span class="load">${carry[Math.floor(Math.random()*carry.length)]}</span><span class="spark">·°·</span>`;
+  BT.appendChild(bot); setTimeout(()=>bot.remove(),dur*1000+600);}
+for(let i=0;i<4;i++)setTimeout(spawnBot,i*2200);
+setInterval(spawnBot,3800);
 
 /* clock */
 setInterval(()=>{document.getElementById('clock').textContent=new Date().toLocaleTimeString('en-US',{hour12:false});},1000);
@@ -395,6 +442,23 @@ inp.addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg(inp.value);});
 const quicks=['Clip tonight’s stream','Post more to the fan page','Add her song to everything','Are we flag-safe?','Give me a status'];
 const qe=document.getElementById('quick');
 quicks.forEach(q=>{const b=document.createElement('button');b.textContent=q;b.onclick=()=>sendMsg(q);qe.appendChild(b);});
+
+/* office floor */
+const floorData=[
+ ['👑','Coco','Chief of Staff','briefing the team','💐'],
+ ['🎬','Remy','Clipper','cutting stream clips','☕'],
+ ['🎀','Mina','Captions','writing + tagging','💄'],
+ ['🎶','Dede','Sound','syncing her music','🎧'],
+ ['📅','Lolo','Scheduler','filling calendar','🪴'],
+ ['🚀','Zaza','Publisher','posting 9 pages','📦'],
+];
+const fe=document.getElementById('floor');
+floorData.forEach(d=>{const el=document.createElement('div');el.className='desk';
+  el.innerHTML=`<div class="work"><span></span><span></span><span></span></div>
+   <div class="screen"><div class="code">${d[0]} ${d[3]}<br>&gt; running…<br>&gt;&gt; done ✔</div></div>
+   <div class="desktop"></div><div class="seat">🤖</div>
+   <div class="plate"><b>${d[1]}</b><br>${d[2]}</div><div class="prop">${d[4]}</div>`;
+  el.querySelector('.seat').style.animationDelay=(-Math.random()*0.8)+'s';fe.appendChild(el);});
 
 /* greeting */
 setTimeout(()=>{bubble('Hey boss 🤍 I’m <b>Coco</b>, your Chief of Staff. The girls are already working — drop your files and tell me what you want and I’ll run the whole team. What are we doing today?','coco');},500);
