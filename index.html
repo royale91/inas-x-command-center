@@ -3,482 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>INAS X — Command Center</title>
+<title>Clipcast · INAS X — Command Center</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --wine:#1c0714; --wine2:#2a0f1e; --plum:#3d1530;
-    --blush:#ffd9e4; --rose:#ff4f88; --hot:#ff2d74; --rose-soft:#ff9cbd;
-    --gold:#e8c37e; --gold2:#f3d9a3; --cream:#fff6f1;
-    --glass:rgba(255,214,228,0.06); --glassbright:rgba(255,214,228,0.12);
-    --line:rgba(255,180,205,0.20);
-    --ok:#7bf0c0; --live:#ff5c8a;
-    --shadow:0 20px 60px -22px rgba(255,45,116,0.5);
-  }
+  :root{--wine:#1c0714;--plum:#2a0f1e;--pink:#ff4f88;--hot:#ff2d80;--blush:#ffd9e6;--rose:#ff9cbd;
+    --gold:#e8c37e;--cream:#fff6f1;--card:rgba(255,214,228,.06);--line:rgba(255,180,205,.18);--ok:#7bf0c0}
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    font-family:'Jost',sans-serif; color:var(--cream);
-    background:
-      radial-gradient(1200px 700px at 80% -10%, rgba(255,80,136,0.30), transparent 60%),
-      radial-gradient(900px 600px at 5% 108%, rgba(232,195,126,0.18), transparent 55%),
-      radial-gradient(700px 500px at 100% 60%, rgba(186,85,211,0.14), transparent 60%),
-      linear-gradient(160deg,#2a0f1e 0%, #1c0714 55%, #120309 100%);
-    min-height:100vh; overflow-x:hidden; position:relative; letter-spacing:.3px;
-  }
-  body::before{content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.5;
-    background:linear-gradient(to top, rgba(255,80,136,.10), transparent 30%),
-      repeating-linear-gradient(90deg, rgba(255,214,228,.025) 0 2px, transparent 2px 46px);
-    mask:linear-gradient(to top, #000 0 20%, transparent 40%);}
-  .hearts{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden}
-  .heart{position:absolute; bottom:-40px; opacity:0; animation:float linear infinite}
-  @keyframes float{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:.55}90%{opacity:.35}100%{transform:translateY(-112vh) rotate(40deg);opacity:0}}
-  /* roaming robots */
-  .bots{position:fixed;inset:0;z-index:6;pointer-events:none;overflow:hidden}
-  .bot{position:absolute;font-size:30px;filter:drop-shadow(0 8px 10px rgba(255,45,116,.55));will-change:transform}
-  .bot .b2{display:inline-block;animation:botbob .7s ease-in-out infinite}
-  .bot .load{position:absolute;top:-22px;left:50%;font-size:16px;animation:botload 1s ease-in-out infinite}
-  .bot .spark{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);font-size:11px;opacity:.7;animation:botbob .5s ease-in-out infinite}
-  @keyframes walk{0%{transform:translateX(-12vw)}100%{transform:translateX(112vw)}}
-  @keyframes walkrev{0%{transform:translateX(112vw)}100%{transform:translateX(-12vw)}}
-  @keyframes botbob{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-8px) rotate(4deg)}}
-  @keyframes botload{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,-5px)}}
-  /* ===== office scene ===== */
-  .office{position:relative;height:310px;border-radius:18px;overflow:hidden;border:1px solid var(--line);
-    background:linear-gradient(180deg,#2a0f1e 0%,#260b1a 52%,#1c0714 100%)}
-  .office .window{position:absolute;top:16px;left:4%;right:4%;height:94px;border-radius:12px;overflow:hidden;
-    background:linear-gradient(180deg,#4a1b3a 0%,#ff6aa0 42%,#f3d9a3 72%,#7a2b50 100%);box-shadow:inset 0 0 40px rgba(255,45,116,.45)}
-  .office .window .sky{position:absolute;bottom:0;left:0;right:0;height:50px;
-    background:repeating-linear-gradient(90deg,#1c0714 0 11px,transparent 11px 17px,#2a0f1e 17px 33px,transparent 33px 43px,#160510 43px 58px,transparent 58px 70px)}
-  .office .window .mull{position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(28,7,20,.45) 0 1px,transparent 1px 58px),repeating-linear-gradient(0deg,rgba(28,7,20,.35) 0 1px,transparent 1px 22px)}
-  .office .floorg{position:absolute;left:0;right:0;bottom:0;height:160px;background:linear-gradient(180deg,#3a1430,#1c0714)}
-  .office .floorg::before{content:"";position:absolute;inset:0;opacity:.5;
-    background:repeating-linear-gradient(90deg,rgba(255,156,189,.10) 0 1px,transparent 1px 48px),repeating-linear-gradient(0deg,rgba(255,156,189,.08) 0 1px,transparent 1px 32px)}
-  .office .desks{position:absolute;top:118px;left:3%;right:3%;display:flex;justify-content:space-between;gap:7px;z-index:2}
-  .desk{position:relative;flex:1;padding:8px 5px 7px;border-radius:12px;text-align:center;overflow:hidden;
-    background:linear-gradient(180deg,rgba(255,214,228,.09),rgba(28,7,20,.6));border:1px solid var(--line)}
-  .desk .work{position:absolute;top:6px;right:6px;display:flex;gap:2px;z-index:2}
-  .desk .work span{width:3px;height:3px;border-radius:50%;background:var(--rose-soft);animation:botload .9s infinite}
-  .desk .work span:nth-child(2){animation-delay:.2s}.desk .work span:nth-child(3){animation-delay:.4s}
-  .desk .screen{height:30px;border-radius:6px;position:relative;overflow:hidden;background:linear-gradient(135deg,#43183a,#1c0714);border:1px solid var(--line);box-shadow:inset 0 0 14px rgba(255,45,116,.4)}
-  .desk .screen .code{position:absolute;left:4px;top:3px;right:4px;text-align:left;font-family:ui-monospace,monospace;font-size:6px;line-height:1.5;color:var(--rose-soft);opacity:.85}
-  .desk .screen::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,156,189,.12) 0 2px,transparent 2px 6px);animation:scan 2.4s linear infinite}
-  @keyframes scan{to{background-position:0 18px}}
-  .desk .seat{font-size:22px;display:inline-block;margin-top:1px;animation:botbob .8s ease-in-out infinite}
-  .desk .plate{font-size:8.5px;color:#ffd9e4cc;margin-top:3px;line-height:1.25}
-  .desk .plate b{color:var(--gold2)}
-  .worker{position:absolute;z-index:3;filter:drop-shadow(0 7px 6px rgba(0,0,0,.45));transition:left .06s linear}
-  .worker .wb{display:inline-block;animation:botbob .5s ease-in-out infinite}
-  .worker .wc{position:absolute;top:-15px;left:50%;transform:translateX(-50%);font-size:13px;animation:botload 1s ease-in-out infinite}
-
-  .wrap{position:relative; z-index:2; max-width:1340px; margin:0 auto; padding:28px 26px 70px}
-
-  /* header */
-  header{display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap; margin-bottom:22px}
-  .brand{display:flex; align-items:center; gap:16px}
-  .seal{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:24px;font-family:'Cormorant Garamond',serif;font-weight:700;color:#3d0d22;
-    background:radial-gradient(circle at 35% 28%, #ffd0e2, var(--hot) 72%);
-    box-shadow:0 0 0 2px rgba(255,214,228,.45), 0 0 36px rgba(255,45,116,.75); animation:beat 2.4s ease-in-out infinite;}
-  @keyframes beat{0%,100%{transform:scale(1)}14%{transform:scale(1.1)}28%{transform:scale(1)}42%{transform:scale(1.06)}}
-  .brand h1{font-family:'Cormorant Garamond',serif; font-weight:700; font-size:42px; line-height:.92; letter-spacing:1px}
-  .brand h1 em{font-style:italic; font-weight:500; color:var(--gold2)}
-  .brand .sub{font-size:11px; letter-spacing:5px; text-transform:uppercase; color:var(--rose-soft); margin-top:5px}
-  .hpills{display:flex; gap:10px; flex-wrap:wrap}
-  .statuspill{display:flex; align-items:center; gap:9px; padding:11px 18px; border-radius:40px;
-    background:var(--glass); border:1px solid var(--line); backdrop-filter:blur(12px); font-size:11.5px; letter-spacing:1.6px; text-transform:uppercase;}
-  .dot{width:9px;height:9px;border-radius:50%;background:var(--live);box-shadow:0 0 12px var(--live);animation:pulse 1.4s infinite}
-  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
-  .clock{color:var(--gold2); font-variant-numeric:tabular-nums}
-
-  /* source ribbon */
-  .sources{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:22px; padding:14px 16px; border-radius:18px;
-    background:linear-gradient(160deg,var(--glassbright),var(--glass)); border:1px solid var(--line); backdrop-filter:blur(14px)}
-  .src{display:flex; align-items:center; gap:10px; font-size:12.5px}
-  .src .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:16px;background:rgba(28,7,20,.5);border:1px solid var(--line)}
-  .src b{color:var(--cream); font-weight:500} .src small{display:block; color:var(--rose-soft); font-size:10px; letter-spacing:.5px}
-  .arrow{color:var(--rose-soft); font-size:18px; opacity:.7}
-  .tag-ok{margin-left:auto; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ok); display:flex; align-items:center; gap:6px}
-  .tag-ok i{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);animation:pulse 1.6s infinite}
-
-  /* stat strip */
-  .stats{display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:22px}
-  .stat{position:relative; padding:18px; border-radius:20px; overflow:hidden;
-    background:linear-gradient(160deg,var(--glassbright),var(--glass)); border:1px solid var(--line); backdrop-filter:blur(14px); box-shadow:var(--shadow)}
-  .stat::after{content:"";position:absolute;top:0;left:-60%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent);animation:sheen 6s infinite}
-  @keyframes sheen{0%{left:-60%}55%,100%{left:140%}}
-  .stat .k{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--rose-soft)}
-  .stat .v{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:600;line-height:1.02;margin-top:4px}
-  .stat .v small{font-size:18px;color:var(--gold2)}
-  .stat.money .v{color:var(--gold2)}
-  .trend{font-size:11px;color:var(--ok);margin-top:3px}
-
-  /* layout */
-  .grid{display:grid; grid-template-columns:1fr 390px; gap:20px; align-items:start}
-  .col{display:flex; flex-direction:column; gap:20px}
-  .panel{border-radius:24px; padding:22px; background:linear-gradient(165deg,rgba(255,214,228,.09),rgba(60,21,48,.34));
-    border:1px solid var(--line); backdrop-filter:blur(16px); box-shadow:var(--shadow)}
-  .panel h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:25px;display:flex;align-items:center;gap:10px}
-  .panel .cap{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--rose-soft);margin:3px 0 18px}
-
-  /* crew */
-  .crew{display:grid; grid-template-columns:repeat(3,1fr); gap:13px}
-  .agent{position:relative; padding:15px; border-radius:18px; overflow:hidden; background:rgba(28,7,20,.42); border:1px solid var(--line); min-height:136px; transition:.3s}
-  .agent:hover{transform:translateY(-4px); box-shadow:0 14px 30px -10px rgba(255,45,116,.5)}
-  .agent .top{display:flex; align-items:center; gap:10px; margin-bottom:9px}
-  .agent .av{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:19px;background:radial-gradient(circle at 35% 30%,#ffc0d8,var(--rose) 75%);box-shadow:0 0 18px rgba(255,79,136,.5)}
-  .agent.chief .av{background:radial-gradient(circle at 35% 30%,var(--gold2),var(--gold) 75%);box-shadow:0 0 22px rgba(232,195,126,.65)}
-  .agent .name{font-size:14px;font-weight:500} .agent .role{font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--rose-soft)}
-  .agent .task{font-size:12px;color:#ffd9e4cc;min-height:32px;line-height:1.35}
-  .bar{height:5px;border-radius:10px;background:rgba(255,214,228,.14);overflow:hidden;margin-top:9px}
-  .bar i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--hot),var(--gold2));width:30%;transition:width .9s ease}
-  .busy{position:absolute;top:12px;right:12px;display:flex;gap:3px;align-items:flex-end;height:12px}
-  .busy span{width:3px;background:var(--rose-soft);border-radius:2px;animation:eq 1s infinite}
-  .busy span:nth-child(2){animation-delay:.2s}.busy span:nth-child(3){animation-delay:.4s}.busy span:nth-child(4){animation-delay:.1s}
-  @keyframes eq{0%,100%{height:3px}50%{height:12px}}
-
-  /* pipeline */
-  .pipe{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line)}
-  .track{position:relative;height:76px;border-radius:16px;background:rgba(28,7,20,.5);border:1px solid var(--line);overflow:hidden}
-  .stations{position:absolute;inset:0;display:flex;justify-content:space-between;align-items:center;padding:0 10px;z-index:1}
-  .st{font-size:9px;letter-spacing:1.3px;text-transform:uppercase;color:var(--rose-soft);text-align:center;width:16%}
-  .st b{display:block;font-size:17px;margin-bottom:3px}
-  .chip{position:absolute;top:50%;left:-50px;width:34px;height:46px;border-radius:7px;transform:translateY(-50%);background:linear-gradient(160deg,#ffb0cd,#ff2d74);box-shadow:0 6px 16px rgba(255,45,116,.55);display:grid;place-items:center;font-size:13px;animation:ride linear infinite;z-index:0}
-  @keyframes ride{0%{left:-50px;opacity:0}6%{opacity:1}94%{opacity:1}100%{left:102%;opacity:0}}
-
-  /* chat */
-  .chat{display:flex;flex-direction:column;height:420px}
-  .cocohead{display:flex;align-items:center;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line)}
-  .cocohead .av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:radial-gradient(circle at 35% 30%,var(--gold2),var(--gold) 75%);box-shadow:0 0 22px rgba(232,195,126,.6)}
-  .cocohead .nm{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600}
-  .cocohead .st2{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ok);display:flex;align-items:center;gap:6px}
-  .cocohead .st2 i{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);animation:pulse 1.6s infinite}
-  .msgs{flex:1;overflow-y:auto;padding:14px 2px;display:flex;flex-direction:column;gap:10px}
-  .msgs::-webkit-scrollbar{width:6px}.msgs::-webkit-scrollbar-thumb{background:var(--line);border-radius:10px}
-  .msg{max-width:88%;padding:10px 13px;border-radius:16px;font-size:13px;line-height:1.45;animation:slidein .4s ease}
-  .msg.coco{align-self:flex-start;background:rgba(232,195,126,.14);border:1px solid rgba(232,195,126,.3);border-bottom-left-radius:5px}
-  .msg.me{align-self:flex-end;background:linear-gradient(160deg,var(--hot),#c81e5c);border-bottom-right-radius:5px;color:#fff}
-  .msg b{color:var(--gold2)} .msg.me b{color:#ffe}
-  @keyframes slidein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-  .typing{align-self:flex-start;display:flex;gap:4px;padding:12px 14px;background:rgba(232,195,126,.12);border-radius:16px;border-bottom-left-radius:5px}
-  .typing span{width:7px;height:7px;border-radius:50%;background:var(--gold2);animation:bob 1s infinite}
-  .typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
-  @keyframes bob{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
-  .quick{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}
-  .quick button{font-family:'Jost',sans-serif;font-size:11px;padding:7px 12px;border-radius:30px;cursor:pointer;color:var(--blush);
-    background:rgba(255,79,136,.12);border:1px solid var(--line);transition:.2s}
-  .quick button:hover{background:rgba(255,79,136,.28);transform:translateY(-1px)}
-  .inputbar{display:flex;gap:8px}
-  .inputbar input{flex:1;font-family:'Jost',sans-serif;font-size:13px;padding:13px 15px;border-radius:30px;color:var(--cream);
-    background:rgba(28,7,20,.55);border:1px solid var(--line);outline:none}
-  .inputbar input::placeholder{color:var(--rose-soft)}
-  .inputbar input:focus{border-color:var(--rose)}
-  .inputbar button{width:48px;border:none;border-radius:50%;cursor:pointer;font-size:17px;color:#fff;background:radial-gradient(circle at 35% 30%,#ff9ec1,var(--hot));box-shadow:0 0 18px rgba(255,45,116,.5);transition:.2s}
-  .inputbar button:hover{transform:scale(1.08)}
-
-  /* feed */
-  .feed{height:230px;overflow:hidden;position:relative}
-  .feed ul{list-style:none;display:flex;flex-direction:column;gap:9px}
-  .feed li{font-size:12px;line-height:1.4;padding:9px 11px;border-radius:12px;background:rgba(28,7,20,.45);border:1px solid var(--line);animation:slidein .5s ease}
-  .feed li b{color:var(--gold2)} .feed li .t{color:var(--rose-soft);font-size:10px;letter-spacing:1px}
-  .feed::after{content:"";position:absolute;bottom:0;left:0;right:0;height:38px;background:linear-gradient(transparent,rgba(28,7,20,.55))}
-
-  /* accounts/pages */
-  .acct{border-radius:18px;background:rgba(28,7,20,.4);border:1px solid var(--line);padding:15px;margin-bottom:13px}
-  .acct .ah{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
-  .acct .ah .nm{font-size:14px;font-weight:500} .acct .ah .nm span{color:var(--rose-soft);font-size:11px}
-  .acct .conn{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--ok);display:flex;align-items:center;gap:5px}
-  .acct .conn i{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);animation:pulse 1.6s infinite}
-  .acct .desc{font-size:11px;color:var(--rose-soft);margin-bottom:11px}
-  .plats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-  .plat{padding:10px 8px;border-radius:12px;background:rgba(255,214,228,.05);border:1px solid var(--line);text-align:center}
-  .plat .pi{font-size:16px} .plat .pn{font-size:10px;margin-top:3px;color:#ffd9e4cc}
-  .plat .nx{font-size:10px;color:var(--gold2);margin-top:4px;font-variant-numeric:tabular-nums}
-
-  .stackbox{display:flex;flex-direction:column;gap:9px}
-  .srow{display:flex;align-items:center;gap:11px;font-size:12.5px;padding:10px 12px;border-radius:12px;background:rgba(28,7,20,.4);border:1px solid var(--line)}
-  .srow .ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:14px;background:rgba(255,79,136,.14)}
-  .srow b{color:var(--cream);font-weight:500} .srow small{display:block;color:var(--rose-soft);font-size:10px}
-  .srow .no{margin-left:auto;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#ff8a8a}
-  .srow .yes{margin-left:auto;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--ok)}
-
-  footer{margin-top:28px;text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--rose-soft);opacity:.7}
-  @media(max-width:1050px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.crew{grid-template-columns:1fr 1fr}}
-  @media(max-width:560px){.brand h1{font-size:32px}.crew{grid-template-columns:1fr}.stat .v{font-size:34px}}
+  body{font-family:'Jost',sans-serif;color:var(--cream);min-height:100vh;letter-spacing:.3px;
+    background:radial-gradient(1100px 700px at 80% -10%,rgba(255,80,136,.28),transparent 60%),
+      radial-gradient(800px 500px at 0% 110%,rgba(232,195,126,.14),transparent 55%),
+      linear-gradient(160deg,#2a0f1e,#1c0714 60%,#120309)}
+  .wrap{max-width:1180px;margin:0 auto;padding:26px 24px 70px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+  .brand{display:flex;align-items:center;gap:14px}
+  .seal{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:700;color:#3d0d22;
+    background:radial-gradient(circle at 35% 30%,#ffd0e2,var(--hot) 72%);box-shadow:0 0 28px rgba(255,45,128,.6)}
+  h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:30px;line-height:1}
+  h1 small{display:block;font-family:'Jost';font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--rose);margin-top:5px}
+  .live{display:flex;align-items:center;gap:9px;padding:9px 16px;border-radius:30px;background:var(--card);border:1px solid var(--line);font-size:11px;letter-spacing:1.5px;text-transform:uppercase}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:p 1.5s infinite}
+  @keyframes p{50%{opacity:.4}}
+  .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:22px}
+  .stat{padding:18px;border-radius:18px;background:linear-gradient(160deg,rgba(255,214,228,.1),var(--card));border:1px solid var(--line)}
+  .stat .k{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--rose)}
+  .stat .v{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:700;line-height:1;margin-top:5px}
+  .stat .v small{font-size:15px;color:var(--gold)}
+  .panel{border-radius:22px;padding:22px;background:linear-gradient(165deg,rgba(255,214,228,.08),rgba(42,15,30,.4));border:1px solid var(--line);margin-bottom:18px}
+  .panel h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:23px;margin-bottom:3px;display:flex;align-items:center;gap:9px}
+  .panel .cap{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--rose);margin-bottom:18px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  /* progress */
+  .goal .bar{height:22px;border-radius:20px;background:rgba(255,214,228,.12);overflow:hidden;margin-top:6px}
+  .goal .bar i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--pink),var(--gold));width:0;transition:width 1.2s}
+  .goal .lbl{display:flex;justify-content:space-between;font-size:13px;color:var(--rose);margin-top:8px}
+  .goal .lbl b{color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:18px}
+  /* funnel */
+  .funnel{display:flex;flex-direction:column;gap:9px}
+  .frow{display:flex;align-items:center;gap:12px}
+  .frow .nm{width:120px;font-size:13px;color:#ffd9e6cc}
+  .frow .track{flex:1;height:26px;border-radius:8px;background:rgba(255,214,228,.08);overflow:hidden}
+  .frow .fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--hot),var(--rose));display:flex;align-items:center;padding:0 10px;font-size:12px;font-weight:600;min-width:34px}
+  /* lanes */
+  .lanes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .lane{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:12px;background:rgba(28,7,20,.45);border:1px solid var(--line)}
+  .lane .n{font-size:13px} .lane .n small{display:block;color:var(--rose);font-size:10px}
+  .lane .c{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--gold)}
+  /* pages */
+  .pages{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .pg{padding:15px;border-radius:14px;background:rgba(28,7,20,.42);border:1px solid var(--line)}
+  .pg .h{font-size:14px;font-weight:500;margin-bottom:6px}
+  .pg .s{font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:20px;display:inline-block}
+  .pg .s.launching{background:rgba(123,240,192,.14);color:var(--ok)}
+  .pg .s.standby{background:rgba(255,156,189,.14);color:var(--rose)}
+  .pg .pl{font-size:11px;color:#ffd9e6aa;margin-top:9px}
+  .cta{display:inline-block;margin-top:8px;font-size:13px;color:var(--gold);border:1px solid var(--line);padding:9px 16px;border-radius:30px;text-decoration:none}
+  .cta:hover{border-color:var(--gold)}
+  footer{text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--rose);opacity:.7;margin-top:26px}
+  @media(max-width:860px){.grid{grid-template-columns:1fr 1fr 1fr}.two,.pages{grid-template-columns:1fr}.lanes{grid-template-columns:1fr}}
 </style>
 </head>
-<body>
-<div class="hearts" id="hearts"></div>
-<div class="wrap">
-
+<body><div class="wrap">
   <header>
-    <div class="brand">
-      <div class="seal">IX</div>
-      <div>
-        <h1>INAS <em>X</em></h1>
-        <div class="sub">Content Command Center · Certified Lover Girls</div>
-      </div>
-    </div>
-    <div class="hpills">
-      <div class="statuspill"><span class="dot"></span> All Systems Live</div>
-      <div class="statuspill">🕒 <span class="clock" id="clock">--:--:--</span></div>
-    </div>
+    <div class="brand"><div class="seal">IX</div>
+      <h1>Clipcast · Inas X<small>Command Center · user #1</small></h1></div>
+    <div class="live"><span class="dot"></span><span id="upd">live</span></div>
   </header>
 
-  <!-- SOURCES -->
-  <div class="sources">
-    <div class="src"><div class="ic">👑</div><div><b>Inas X</b><small>streams · videos · photos</small></div></div>
-    <span class="arrow">→</span>
-    <div class="src"><div class="ic">📁</div><div><b>Google Drive</b><small>raw content drop</small></div></div>
-    <span class="arrow">→</span>
-    <div class="src"><div class="ic">🎬</div><div><b>Agent Factory</b><small>clip · caption · brand · song</small></div></div>
-    <span class="arrow">→</span>
-    <div class="src"><div class="ic">🚀</div><div><b>Distribution</b><small>Blotato · 3 pages × 3 apps</small></div></div>
-    <span class="arrow">→</span>
-    <div class="src"><div class="ic">💗</div><div><b>Tags @inasx</b><small>every post → her real account</small></div></div>
-    <div class="tag-ok"><i></i> pipeline flowing</div>
+  <section class="grid" id="stats"></section>
+
+  <div class="panel goal">
+    <h2>🎯 Road to 50K</h2><div class="cap">followers across her pages</div>
+    <div class="bar"><i id="goalbar"></i></div>
+    <div class="lbl"><span><b id="fol">0</b> followers</span><span>goal <b>50,000</b></span></div>
   </div>
 
-  <!-- STATS -->
-  <section class="stats">
-    <div class="stat"><div class="k">Library</div><div class="v" data-to="2000" id="s-lib">0</div><div class="trend">files loaded</div></div>
-    <div class="stat"><div class="k">Auto-clipped</div><div class="v" data-to="1203" id="s-proc">0</div><div class="trend">↑ cut · captioned · branded</div></div>
-    <div class="stat"><div class="k">Queued</div><div class="v" data-to="331" id="s-q">0</div><div class="trend">days of runway</div></div>
-    <div class="stat"><div class="k">Posted today</div><div class="v" id="s-post">0<small>/24</small></div><div class="trend" id="post-tr">auto-posting…</div></div>
-    <div class="stat money"><div class="k">New fans · today</div><div class="v">+<span data-to="412" id="s-fans">0</span></div><div class="trend">across all pages</div></div>
-  </section>
-
-  <div class="grid">
-    <!-- LEFT -->
-    <div class="col">
-      <div class="panel">
-        <h2>👑 The Crew</h2>
-        <div class="cap">Coco runs the team · the girls work 24/7</div>
-        <div class="crew" id="crew"></div>
-        <div class="pipe">
-          <div class="cap">Live assembly line — clips flowing through the factory</div>
-          <div class="track" id="track">
-            <div class="stations">
-              <div class="st"><b>📁</b>Intake</div>
-              <div class="st"><b>🎬</b>Clip</div>
-              <div class="st"><b>🎀</b>Caption</div>
-              <div class="st"><b>🎶</b>Song</div>
-              <div class="st"><b>📅</b>Schedule</div>
-              <div class="st"><b>🚀</b>Post</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <h2>💬 Live Activity</h2>
-        <div class="cap">Everything the girls are doing right now</div>
-        <div class="feed"><ul id="feed"></ul></div>
-      </div>
-    </div>
-
-    <!-- RIGHT -->
-    <div class="col">
-      <!-- CHAT -->
-      <div class="panel">
-        <div class="chat">
-          <div class="cocohead">
-            <div class="av">👑</div>
-            <div style="flex:1"><div class="nm">Talk to Coco</div><div class="st2"><i></i> Chief of Staff · online</div></div>
-          </div>
-          <div class="msgs" id="msgs"></div>
-          <div class="quick" id="quick"></div>
-          <div class="inputbar">
-            <input id="inp" placeholder="Tell Coco what to do…" autocomplete="off">
-            <button id="send">➤</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- PAGES -->
-      <div class="panel">
-        <h2>📲 The Pages</h2>
-        <div class="cap">3 pages × 3 apps · her face everywhere · all tag @inasx</div>
-        <div id="accts"></div>
-      </div>
-
-      <!-- STACK -->
-      <div class="panel">
-        <h2>⚙️ The Stack</h2>
-        <div class="cap">Set up the smart way · no n8n</div>
-        <div class="stackbox">
-          <div class="srow"><div class="ic">📁</div><div><b>Google Drive</b><small>you drop files here</small></div><span class="yes">connected</span></div>
-          <div class="srow"><div class="ic">🎬</div><div><b>Clip + Caption Agent</b><small>cuts, captions, brands, burns her song</small></div><span class="yes">running</span></div>
-          <div class="srow"><div class="ic">🚀</div><div><b>Blotato</b><small>auto-posts to all 9 pages</small></div><span class="yes">armed</span></div>
-          <div class="srow"><div class="ic">🔑</div><div><b>Password Manager</b><small>holds all logins</small></div><span class="yes">secured</span></div>
-          <div class="srow"><div class="ic">🧩</div><div><b>n8n</b><small>not needed — Blotato API replaces it</small></div><span class="no">skipped</span></div>
-        </div>
-      </div>
-    </div>
+  <div class="two">
+    <div class="panel"><h2>⚙️ The Pipeline</h2><div class="cap">her content, flowing through the machine</div>
+      <div class="funnel" id="funnel"></div></div>
+    <div class="panel"><h2>🗂️ Sorted into lanes</h2><div class="cap">by the AI</div>
+      <div class="lanes" id="lanes"></div></div>
   </div>
 
-  <section class="panel" style="margin-top:20px">
-    <h2>🏢 The Office</h2>
-    <div class="cap">the girls’ bots — at their desks + walking the floor, 24/7</div>
-    <div class="office" id="office">
-      <div class="window"><div class="sky"></div><div class="mull"></div></div>
-      <div class="floorg"></div>
-      <div class="desks" id="desks"></div>
-    </div>
-  </section>
+  <div class="panel"><h2>📲 Her Pages</h2><div class="cap">3 pages · Pinterest live, rest on deck</div>
+    <div class="pages" id="pages"></div></div>
 
-  <footer>Inas X 🤍 Certified Lover Girls · built to run itself</footer>
+  <div class="panel"><h2>📅 Calendar & what posted where</h2>
+    <div class="cap">every scheduled + posted item, with stats</div>
+    <p style="font-size:14px;color:#ffd9e6cc;line-height:1.6">The full posting calendar + analytics live in <b>Upload-Post</b> (it schedules + tracks every post). This dashboard is your single overview; tap through for the day-by-day calendar.</p>
+    <a class="cta" href="https://app.upload-post.com/calendar" target="_blank">Open Calendar →</a>
+    <a class="cta" href="https://app.upload-post.com/analytics" target="_blank">Open Analytics →</a>
+  </div>
+
+  <footer>Clipcast 🤍 · Inas X is user #1 · data is live from the engine</footer>
 </div>
 
 <script>
-/* hearts */
-const H=document.getElementById('hearts'),G=['🤍','💗','💕','🩷','✨','🎀'];
-for(let i=0;i<18;i++){const h=document.createElement('div');h.className='heart';h.textContent=G[i%G.length];
-  h.style.left=Math.random()*100+'%';h.style.animationDuration=(10+Math.random()*12)+'s';
-  h.style.animationDelay=(-Math.random()*16)+'s';h.style.fontSize=(12+Math.random()*16)+'px';H.appendChild(h);}
-
-
-/* clock */
-setInterval(()=>{document.getElementById('clock').textContent=new Date().toLocaleTimeString('en-US',{hour12:false});},1000);
-
-/* count up */
-function cu(el,to,d=1600){const s=performance.now();(function st(t){let p=Math.min(1,(t-s)/d);p=1-Math.pow(1-p,3);
-  el.textContent=Math.floor(to*p).toLocaleString();if(p<1)requestAnimationFrame(st);})(performance.now());}
-document.querySelectorAll('[data-to]').forEach(el=>cu(el,+el.dataset.to));
-
-/* crew */
-const crew=[
- {cls:'chief',av:'👑',name:'Coco',role:'Chief of Staff',tasks:['Running the team 💅','Reviewing today’s drop','Topping up the queue','Sending your daily brief']},
- {av:'🎬',name:'Remy',role:'Clipper',tasks:['Cutting last night’s stream','Finding the best 30s','Rendering 9:16','Clip #1,204 done ✔']},
- {av:'🎀',name:'Mina',role:'Captions + Brand',tasks:['Writing the caption','Auto-tagging @inasx_ ✔','Picking #lovergirl #fyp','Adding the Inas X watermark']},
- {av:'🎶',name:'Dede',role:'Sound',tasks:['Dropping in her track 🎶','Matching the vibe','Her own music — safe ✔','Boosting her streams']},
- {av:'📅',name:'Lolo',role:'Scheduler',tasks:['Stamping peak-hour slots','Spacing the 6/day','Building the calendar','331 days queued']},
- {av:'🚀',name:'Zaza',role:'Publisher',tasks:['Pushing to Blotato','Posting to @inasxlovergirls','Auto-post armed','Live on 6 pages 24/7']},
-];
-const ce=document.getElementById('crew');
-crew.forEach((a,i)=>{const d=document.createElement('div');d.className='agent '+(a.cls||'');
-  d.innerHTML=`<div class="busy"><span></span><span></span><span></span><span></span></div>
-   <div class="top"><div class="av">${a.av}</div><div><div class="name">${a.name}</div><div class="role">${a.role}</div></div></div>
-   <div class="task" id="task-${i}">${a.tasks[0]}</div><div class="bar"><i id="bar-${i}"></i></div>`;ce.appendChild(d);});
-crew.forEach((a,i)=>{const b=document.getElementById('bar-'+i);b.style.width=(28+Math.random()*68)+'%';let k=0;
-  setInterval(()=>{k=(k+1)%a.tasks.length;document.getElementById('task-'+i).textContent=a.tasks[k];
-   b.style.width=(28+Math.random()*68).toFixed(0)+'%';},2200+Math.random()*1800);});
-
-/* chips */
-const track=document.getElementById('track'),cg=['🎬','💖','🎀','✨','🎶','📸'];
-function chip(){const c=document.createElement('div');c.className='chip';c.textContent=cg[Math.floor(Math.random()*cg.length)];
-  c.style.animationDuration=(8+Math.random()*3)+'s';c.style.top=(38+Math.random()*24)+'%';track.appendChild(c);setTimeout(()=>c.remove(),11500);}
-setInterval(chip,1000);chip();
-
-/* feed */
-const feed=document.getElementById('feed');
-const who=[['Remy','🎬'],['Mina','🎀'],['Dede','🎶'],['Zaza','🚀'],['Lolo','📅'],['Coco','👑']];
-const acts=['clipped a 28s moment from the stream','pulled a BTS + lifestyle cut from the folder','played Inas X’s track on clip #%',
- 'routed clip #% → @inasxlovergirls','routed clip #% → @inasxlive','sent the best-of → @inasxhq','auto-tagged @inasx_ in clip #%',
- 'scheduled clip #% for 7:10pm','pushed % clips to Blotato — armed','posted to IG · TikTok · YT','picked 7 hashtags (#lovergirl)','approved clip #% · passed QC'];
-function fl(){const [n,e]=who[Math.floor(Math.random()*who.length)];
-  const a=acts[Math.floor(Math.random()*acts.length)].replace(/%/g,()=>Math.floor(100+Math.random()*1900));
-  const li=document.createElement('li');
-  li.innerHTML=`<span class="t">${new Date().toLocaleTimeString('en-US',{hour12:false})}</span> &nbsp;${e} <b>${n}</b> ${a}`;
-  feed.prepend(li);while(feed.children.length>8)feed.lastChild.remove();}
-for(let i=0;i<7;i++)fl();setInterval(fl,1700);
-
-/* accounts */
-const accts=[
- {nm:'@inasxhq',desc:'The hub · announcements, release dates, merch, best-of',cad:['2/day','3/day','3/day']},
- {nm:'@inasxlive',desc:'Stream clips · live singing, reactions, funny moments',cad:['2-3/day','4-5/day','4-5/day']},
- {nm:'@inasxlovergirls',desc:'Fan page · fan edits, BTS, music video cuts',cad:['2/day','3-4/day','3-4/day']},
-];
-const plats=[['📸','IG'],['🎵','TikTok'],['▶️','YT']];
-const ae=document.getElementById('accts');
-accts.forEach((ac,ai)=>{const d=document.createElement('div');d.className='acct';
-  d.innerHTML=`<div class="ah"><div class="nm">${ac.nm}</div><div class="conn"><i></i>connected</div></div>
-   <div class="desc">${ac.desc}</div><div class="plats">${plats.map((p,pi)=>`<div class="plat"><div class="pi">${p[0]}</div><div class="pn">${p[1]} · ${ac.cad[pi]}</div><div class="nx" id="nx-${ai}-${pi}">--m</div></div>`).join('')}</div>`;
-  ae.appendChild(d);});
-/* her real account — the destination everything funnels to */
-const real=document.createElement('div');real.className='acct';real.style.borderColor='rgba(232,195,126,.45)';real.style.background='rgba(232,195,126,.08)';
-real.innerHTML=`<div class="ah"><div class="nm">@inasx ✓ <span>· @inasx_ on TikTok/YT</span></div><div class="conn" style="color:var(--gold2)"><i style="background:var(--gold2);box-shadow:0 0 8px var(--gold2)"></i>her real · 3.4M</div></div><div class="desc">Every clip auto-tags her here + plays her music 🎶 — all the reach funnels back to Inas X. She owns it (not run by the machine).</div>`;
-ae.appendChild(real);
-let secs={};accts.forEach((a,ai)=>plats.forEach((p,pi)=>secs[ai+'-'+pi]=60+Math.floor(Math.random()*9000)));
-setInterval(()=>{for(const k in secs){let s=secs[k];s=s<=0?3600+Math.floor(Math.random()*9000):s-1;secs[k]=s;
-  const h=Math.floor(s/3600),m=Math.floor((s%3600)/60);const el=document.getElementById('nx-'+k);if(el)el.textContent=(h>0?h+'h ':'')+String(m).padStart(2,'0')+'m';}},1000);
-
-/* posted ticker */
-let posted=8;setInterval(()=>{posted=posted>=24?10:posted+1;document.getElementById('s-post').innerHTML=posted+'<small>/24</small>';
-  document.getElementById('post-tr').textContent=posted>=24?'✔ today’s drop complete':'auto-posting…';},2600);
-
-/* ===== CHAT — talk to Coco, she commands the crew ===== */
-const msgs=document.getElementById('msgs'),inp=document.getElementById('inp');
-function bubble(txt,who){const d=document.createElement('div');d.className='msg '+who;d.innerHTML=txt;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
-function typing(){const d=document.createElement('div');d.className='typing';d.id='typing';d.innerHTML='<span></span><span></span><span></span>';msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
-function stopType(){const t=document.getElementById('typing');if(t)t.remove();}
-function dispatch(line){fl();const li=feed.firstChild;if(li)li.innerHTML=`<span class="t">${new Date().toLocaleTimeString('en-US',{hour12:false})}</span> &nbsp;👑 <b>Coco</b> → ${line}`;}
-
-const intents=[
- {k:['clip','stream','cut','footage'],r:()=>{dispatch('Remy: clip tonight’s stream, best moments first 🎬');return 'Say less 💅 I’ve got <b>Remy</b> cutting the stream now — best 30-second moments first. They’ll be captioned and queued before you wake up.';}},
- {k:['caption','hashtag','brand','watermark'],r:()=>{dispatch('Mina: refresh captions + hashtags ✨');return 'On it — <b>Mina</b>’s refreshing captions + hashtags and keeping the Inas X brand on every clip. 🎀';}},
- {k:['song','music','sound','track'],r:()=>{dispatch('Dede: drop Inas X’s track on the batch 🎶');return 'Yes 🎶 <b>Dede</b>’s dropping Inas X’s own tracks in — it’s her music so we’re safe, and every post sends people to her sound.';}},
- {k:['fan','lovergirl','lover girl'],r:()=>{dispatch('Zaza: weight today toward @inasxlovergirls 💗');return 'Love it — I’m weighting today’s drop toward <b>@inasxlovergirls</b>. The lover girls get the soft, personal clips. 💗';}},
- {k:['live','@inasxlive','stream page'],r:()=>{dispatch('Zaza: push high-energy clips to @inasxlive ⚡');return 'Done — <b>@inasxlive</b> gets the high-energy stream clips. Keeping the pages different so nothing gets flagged.';}},
- {k:['hq','hub','announce','release','merch','show'],r:()=>{dispatch('Zaza: best-of + announcements → @inasxhq 📢');return 'On it — <b>@inasxhq</b> gets announcements, release dates, merch drops, and the best clips from the other pages. 📢';}},
- {k:['tag','@inasx','credit','main','funnel','3.4'],r:()=>{return 'Every clip auto-tags her real page 💗 <b>@inasx</b> on IG, <b>@inasx_</b> on TikTok & YouTube — funneling straight to her 3.4M. And her music plays on each one 🎶';}},
- {k:['viral','blow up','fyp','trend','grow','explode'],r:()=>{dispatch('team: run the viral playbook on today’s batch 🔥');return 'Viral mode on 🔥 I’m having the girls lead every clip with a 3-second hook, ride trending sounds where her music fits, post at peak hours, and double down the second something pops. We turn 1 good clip into 9 cuts across the pages.';}},
- {k:['more','10','20','post more','volume','scale'],r:()=>{dispatch('Lolo: scale the queue up for today 📈');return 'Scaling up 📈 <b>Lolo</b>’s adding more slots — but I’ll ramp new pages slowly so we stay flag-safe. Quality over spam, always.';}},
- {k:['pause','stop','hold'],r:()=>{dispatch('Zaza: pause auto-posting ⏸️');return 'Paused ⏸️ Nothing goes out until you tell me go. The queue’s safe and waiting.';}},
- {k:['schedule','time','when','daily','peak'],r:()=>{dispatch('Lolo: optimize slots to peak hours 📅');return '<b>Lolo</b>’s locking posts to peak hours per platform — 6 a day, spaced out like a real person. 📅';}},
- {k:['flag','safe','ban','shadow'],r:()=>{return 'We’re flag-safe, babe 🛡️ unique content per page, her own music, AI-label on, no hype claims, links in bio only. I won’t let a page get burned.';}},
- {k:['post','go','launch','drop','today'],r:()=>{dispatch('Zaza: release today’s drop to all 6 pages 🚀');return 'Releasing today’s drop 🚀 <b>Zaza</b>’s pushing to all 6 pages through Blotato. I’ll send you the recap tonight.';}},
- {k:['report','brief','recap','how','status','doing'],r:()=>{return 'Today so far 🤍: 1,203 clips processed, 331 days queued, 6 pages live, +412 new fans. Best performer: a lover-girls reel. Want me to make more like it?';}},
-];
-function cocoReply(text){const t=text.toLowerCase();
-  for(const it of intents){if(it.k.some(w=>t.includes(w)))return it.r();}
-  dispatch('team: new direction from the boss 👑');
-  return 'Got it 💅 I’ll brief the girls and make it happen. Tell me which page to push it to — <b>@inasxlive</b> or <b>@inasxlovergirls</b>?';}
-function sendMsg(text){if(!text.trim())return;bubble(text,'me');inp.value='';typing();
-  setTimeout(()=>{stopType();bubble(cocoReply(text),'coco');},700+Math.random()*600);}
-document.getElementById('send').onclick=()=>sendMsg(inp.value);
-inp.addEventListener('keydown',e=>{if(e.key==='Enter')sendMsg(inp.value);});
-
-const quicks=['Clip tonight’s stream','Post more to the fan page','Add her song to everything','Are we flag-safe?','Give me a status'];
-const qe=document.getElementById('quick');
-quicks.forEach(q=>{const b=document.createElement('button');b.textContent=q;b.onclick=()=>sendMsg(q);qe.appendChild(b);});
-
-/* office scene — desks + robots walking the floor */
-const floorData=[
- ['👑','Coco','briefing the team'],
- ['🎬','Remy','cutting clips'],
- ['🎀','Mina','writing + tagging'],
- ['🎶','Dede','syncing music'],
- ['📅','Lolo','filling calendar'],
- ['🚀','Zaza','posting 9 pages'],
-];
-const desksEl=document.getElementById('desks');
-floorData.forEach(d=>{const el=document.createElement('div');el.className='desk';
-  el.innerHTML=`<div class="work"><span></span><span></span><span></span></div>
-   <div class="screen"><div class="code">${d[0]} ${d[2]}<br>&gt; ok ✔</div></div>
-   <div class="seat">🤖</div><div class="plate"><b>${d[1]}</b></div>`;
-  el.querySelector('.seat').style.animationDelay=(-Math.random()*0.8)+'s';desksEl.appendChild(el);});
-
-/* robots walking the office floor — contained inside the room */
-const office=document.getElementById('office');
-const wcarry=['🎬','💖','🎀','🎶','📁','📸','☕'];
-function addWorker(bottom,size,speed){
-  const w=document.createElement('div');w.className='worker';
-  w.style.bottom=bottom+'px';w.style.fontSize=size+'px';
-  w.innerHTML=`<span class="wb">🤖</span><span class="wc">${wcarry[Math.floor(Math.random()*wcarry.length)]}</span>`;
-  office.appendChild(w);
-  let pos=6+Math.random()*78,dir=Math.random()<.5?1:-1;w.style.left=pos+'%';
-  setInterval(()=>{pos+=dir*speed;
-    if(pos>87){pos=87;dir=-1;w.querySelector('.wc').textContent=wcarry[Math.floor(Math.random()*wcarry.length)];}
-    if(pos<5){pos=5;dir=1;w.querySelector('.wc').textContent=wcarry[Math.floor(Math.random()*wcarry.length)];}
-    w.style.left=pos+'%';w.querySelector('.wb').style.transform='scaleX('+(dir>0?1:-1)+')';
-  },55);
-}
-addWorker(10,28,0.42); addWorker(34,21,0.3); addWorker(2,30,0.52);
-
-/* greeting */
-setTimeout(()=>{bubble('Hey boss 🤍 I’m <b>Coco</b>, your Chief of Staff. The girls are already working — drop your files and tell me what you want and I’ll run the whole team. What are we doing today?','coco');},500);
+const LANES={fan:["💗 Fan page","glam · lifestyle · BTS"],photos:["📸 Photos",""],hq:["👑 HQ","polished · performances"],
+  stream:["🎤 Stream","singing · reactions"],raw_long:["✂️ To clip","long videos → shorts"],
+  review:["⚠️ Needs Review","risqué/private — your call"],album:["🔒 Album Hold",""]};
+fetch('data.json?t='+Date.now()).then(r=>r.json()).then(d=>{
+  const lib=d.library||{};
+  const stats=[["Library",lib.total,""],["Videos",lib.videos,""],["Photos",lib.photos,""],
+    ["Dupes caught",lib.duplicates,""],["Songs 🎵",d.songs,""]];
+  document.getElementById('stats').innerHTML=stats.map(s=>`<div class="stat"><div class="k">${s[0]}</div><div class="v">${(s[1]??0).toLocaleString()}${s[2]}</div></div>`).join('');
+  // goal
+  const fol=d.followers||0,goal=d.goal||50000;
+  document.getElementById('fol').textContent=fol.toLocaleString();
+  setTimeout(()=>document.getElementById('goalbar').style.width=Math.max(1.5,fol/goal*100)+'%',150);
+  // funnel
+  const pl=d.pipeline||{}; const steps=[["Cataloged",lib.total],["Sorted",(d.lanes?Object.values(d.lanes).reduce((a,b)=>a+b,0):0)],["Finished",pl.finished||0],["Scheduled",pl.scheduled||0],["Posted",pl.posted||0]];
+  const mx=Math.max(...steps.map(s=>s[1]),1);
+  document.getElementById('funnel').innerHTML=steps.map(s=>`<div class="frow"><div class="nm">${s[0]}</div><div class="track"><div class="fill" style="width:${Math.max(6,s[1]/mx*100)}%">${s[1]}</div></div></div>`).join('');
+  // lanes
+  document.getElementById('lanes').innerHTML=Object.entries(d.lanes||{}).sort((a,b)=>b[1]-a[1]).map(([k,v])=>{const L=LANES[k]||[k,""];return `<div class="lane"><div class="n">${L[0]}<small>${L[1]}</small></div><div class="c">${v}</div></div>`}).join('');
+  // pages
+  document.getElementById('pages').innerHTML=(d.pages||[]).map(p=>`<div class="pg"><div class="h">${p.name}</div><span class="s ${p.status}">${p.status}</span><div class="pl">${p.live&&p.live.length?'live: '+p.live.join(', '):'not posting yet'}</div></div>`).join('');
+  // updated
+  if(d.updated){const t=new Date(d.updated);document.getElementById('upd').textContent='updated '+t.toLocaleString();}
+}).catch(e=>{document.getElementById('upd').textContent='data loading…'});
 </script>
 </body>
 </html>

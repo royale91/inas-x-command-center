@@ -1,0 +1,50 @@
+{
+  "updated": "2026-10-02T21:50:36.770453+00:00",
+  "goal": 50000,
+  "followers": 0,
+  "library": {
+    "total": 1243,
+    "videos": 803,
+    "photos": 440,
+    "duplicates": 416
+  },
+  "lanes": {
+    "fan": 466,
+    "photos": 416,
+    "hq": 85,
+    "stream": 20,
+    "raw_long": 27,
+    "review": 228,
+    "album": 1
+  },
+  "pipeline": {
+    "cataloged": 0,
+    "sorted": 416,
+    "queued": 598,
+    "finished": 0,
+    "scheduled": 0,
+    "posted": 0,
+    "needs_review": 228,
+    "hold": 1
+  },
+  "songs": 6,
+  "pages": [
+    {
+      "name": "@inasxlovergirls",
+      "live": [
+        "pinterest"
+      ],
+      "status": "launching"
+    },
+    {
+      "name": "@inasxlive",
+      "live": [],
+      "status": "standby"
+    },
+    {
+      "name": "@inasxhq",
+      "live": [],
+      "status": "standby"
+    }
+  ]
+}
