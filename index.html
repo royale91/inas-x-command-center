@@ -59,6 +59,19 @@
   .pg .pl{font-size:11px;color:#ffd9e6aa;margin-top:9px}
   .cta{display:inline-block;margin-top:8px;font-size:13px;color:var(--gold);border:1px solid var(--line);padding:9px 16px;border-radius:30px;text-decoration:none}
   .cta:hover{border-color:var(--gold)}
+  /* pink calendar */
+  .calhead{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;margin-bottom:7px}
+  .cahd{text-align:center;font-size:10px;letter-spacing:1.5px;color:var(--rose);text-transform:uppercase}
+  .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+  .calday{min-height:74px;border-radius:13px;background:rgba(28,7,20,.42);border:1px solid var(--line);padding:7px;position:relative;transition:.2s}
+  .calday.empty{background:transparent;border:none}
+  .calday.has{background:linear-gradient(160deg,rgba(255,79,136,.22),rgba(42,15,30,.5));border-color:var(--pink);box-shadow:0 0 16px rgba(255,45,128,.22)}
+  .calday.today{outline:2px solid var(--gold);outline-offset:-2px}
+  .calday .dn{font-size:12px;color:#ffd9e6aa;font-weight:500}
+  .calday.has .dn{color:var(--cream)}
+  .calpost{display:block;font-size:9px;margin-top:4px;padding:3px 6px;border-radius:7px;background:rgba(255,45,128,.32);color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.3px}
+  .calpost.posted{background:linear-gradient(90deg,var(--hot),var(--gold));color:#3d0d22;font-weight:600}
+  @media(max-width:860px){.calday{min-height:52px;padding:4px}.calpost{font-size:8px}}
   footer{text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--rose);opacity:.7;margin-top:26px}
   @media(max-width:860px){.grid{grid-template-columns:1fr 1fr 1fr}.two,.pages{grid-template-columns:1fr}.lanes{grid-template-columns:1fr}}
 </style>
@@ -88,10 +101,10 @@
   <div class="panel"><h2>📲 Her Pages</h2><div class="cap">3 pages · Pinterest live, rest on deck</div>
     <div class="pages" id="pages"></div></div>
 
-  <div class="panel"><h2>📅 Calendar — what posted where</h2>
-    <div class="cap">your schedule, right here (your site — not a 3rd party)</div>
-    <div id="cal"></div>
-    <a class="cta" href="https://app.upload-post.com/analytics" target="_blank" style="margin-top:12px">Detailed analytics →</a>
+  <div class="panel"><h2>📅 Calendar</h2>
+    <div class="cap" id="calmonth">your posting calendar</div>
+    <div class="calhead" id="calhead"></div>
+    <div class="calgrid" id="calgrid"></div>
   </div>
 
   <footer>Clipcast 🤍 · Inas X is user #1 · data is live from the engine</footer>
@@ -118,9 +131,24 @@ fetch('data.json?t='+Date.now()).then(r=>r.json()).then(d=>{
   document.getElementById('lanes').innerHTML=Object.entries(d.lanes||{}).sort((a,b)=>b[1]-a[1]).map(([k,v])=>{const L=LANES[k]||[k,""];return `<div class="lane"><div class="n">${L[0]}<small>${L[1]}</small></div><div class="c">${v}</div></div>`}).join('');
   // pages
   document.getElementById('pages').innerHTML=(d.pages||[]).map(p=>`<div class="pg"><div class="h">${p.name}</div><span class="s ${p.status}">${p.status}</span><div class="pl">${p.live&&p.live.length?'🔗 connected: '+p.live.join(', '):'not connected yet'}</div></div>`).join('');
-  // OUR calendar (on OUR site) — scheduled + posted
-  const cal=d.calendar||[];
-  document.getElementById('cal').innerHTML = cal.length ? cal.map(c=>`<div class="lane" style="margin-bottom:8px"><div class="n">${c.status==='posted'?'✅ posted':'🕒 scheduled'} · ${c.platform} · ${c.kind}<small>${c.title}</small></div><div class="c" style="font-size:13px;color:var(--gold)">${c.date}</div></div>`).join('') : '<p style="color:#ffd9e6aa;font-size:14px;padding:6px 0">nothing scheduled yet — fills automatically as the machine runs</p>';
+  // OUR pink month calendar (on OUR site, not a 3rd party)
+  (function(cal){
+    const byDate={}; let ym=null;
+    cal.forEach(c=>{const p=c.date.split('-').map(Number); ym=[p[0],p[1]]; (byDate[p[2]]=byDate[p[2]]||[]).push(c);});
+    const now=new Date(); const base = ym || [now.getFullYear(), now.getMonth()+1];
+    const y=base[0], m=base[1];                       // m is 1-12
+    const first=new Date(y,m-1,1).getDay();
+    const days=new Date(y,m,0).getDate();
+    const todayD=(now.getFullYear()===y && now.getMonth()+1===m)?now.getDate():-1;
+    const MON=["January","February","March","April","May","June","July","August","September","October","November","December"];
+    document.getElementById('calmonth').textContent=MON[m-1]+' '+y+' · your posting calendar';
+    document.getElementById('calhead').innerHTML=['S','M','T','W','T','F','S'].map(d=>`<div class="cahd">${d}</div>`).join('');
+    let cells='';
+    for(let i=0;i<first;i++)cells+='<div class="calday empty"></div>';
+    for(let d=1;d<=days;d++){const ps=byDate[d]||[];
+      cells+=`<div class="calday${ps.length?' has':''}${d===todayD?' today':''}"><span class="dn">${d}</span>${ps.map(p=>`<span class="calpost ${p.status}">${p.status==='posted'?'✓':'•'} ${p.platform}</span>`).join('')}</div>`;}
+    document.getElementById('calgrid').innerHTML=cells;
+  })(d.calendar||[]);
   // updated
   if(d.updated){const t=new Date(d.updated);document.getElementById('upd').textContent='updated '+t.toLocaleString();}
 }).catch(e=>{document.getElementById('upd').textContent='data loading…'});
