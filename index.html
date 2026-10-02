@@ -88,11 +88,10 @@
   <div class="panel"><h2>📲 Her Pages</h2><div class="cap">3 pages · Pinterest live, rest on deck</div>
     <div class="pages" id="pages"></div></div>
 
-  <div class="panel"><h2>📅 Calendar & what posted where</h2>
-    <div class="cap">every scheduled + posted item, with stats</div>
-    <p style="font-size:14px;color:#ffd9e6cc;line-height:1.6">The full posting calendar + analytics live in <b>Upload-Post</b> (it schedules + tracks every post). This dashboard is your single overview; tap through for the day-by-day calendar.</p>
-    <a class="cta" href="https://app.upload-post.com/calendar" target="_blank">Open Calendar →</a>
-    <a class="cta" href="https://app.upload-post.com/analytics" target="_blank">Open Analytics →</a>
+  <div class="panel"><h2>📅 Calendar — what posted where</h2>
+    <div class="cap">your schedule, right here (your site — not a 3rd party)</div>
+    <div id="cal"></div>
+    <a class="cta" href="https://app.upload-post.com/analytics" target="_blank" style="margin-top:12px">Detailed analytics →</a>
   </div>
 
   <footer>Clipcast 🤍 · Inas X is user #1 · data is live from the engine</footer>
@@ -118,7 +117,10 @@ fetch('data.json?t='+Date.now()).then(r=>r.json()).then(d=>{
   // lanes
   document.getElementById('lanes').innerHTML=Object.entries(d.lanes||{}).sort((a,b)=>b[1]-a[1]).map(([k,v])=>{const L=LANES[k]||[k,""];return `<div class="lane"><div class="n">${L[0]}<small>${L[1]}</small></div><div class="c">${v}</div></div>`}).join('');
   // pages
-  document.getElementById('pages').innerHTML=(d.pages||[]).map(p=>`<div class="pg"><div class="h">${p.name}</div><span class="s ${p.status}">${p.status}</span><div class="pl">${p.live&&p.live.length?'live: '+p.live.join(', '):'not posting yet'}</div></div>`).join('');
+  document.getElementById('pages').innerHTML=(d.pages||[]).map(p=>`<div class="pg"><div class="h">${p.name}</div><span class="s ${p.status}">${p.status}</span><div class="pl">${p.live&&p.live.length?'🔗 connected: '+p.live.join(', '):'not connected yet'}</div></div>`).join('');
+  // OUR calendar (on OUR site) — scheduled + posted
+  const cal=d.calendar||[];
+  document.getElementById('cal').innerHTML = cal.length ? cal.map(c=>`<div class="lane" style="margin-bottom:8px"><div class="n">${c.status==='posted'?'✅ posted':'🕒 scheduled'} · ${c.platform} · ${c.kind}<small>${c.title}</small></div><div class="c" style="font-size:13px;color:var(--gold)">${c.date}</div></div>`).join('') : '<p style="color:#ffd9e6aa;font-size:14px;padding:6px 0">nothing scheduled yet — fills automatically as the machine runs</p>';
   // updated
   if(d.updated){const t=new Date(d.updated);document.getElementById('upd').textContent='updated '+t.toLocaleString();}
 }).catch(e=>{document.getElementById('upd').textContent='data loading…'});

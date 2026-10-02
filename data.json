@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-02T21:50:36.770453+00:00",
+  "updated": "2026-10-02T22:26:55.631836+00:00",
   "goal": 50000,
   "followers": 0,
   "library": {
@@ -20,12 +20,10 @@
   "pipeline": {
     "cataloged": 0,
     "sorted": 416,
-    "queued": 598,
-    "finished": 0,
+    "queued": 595,
+    "finished": 1,
     "scheduled": 0,
-    "posted": 0,
-    "needs_review": 228,
-    "hold": 1
+    "posted": 2
   },
   "songs": 6,
   "pages": [
@@ -45,6 +43,22 @@
       "name": "@inasxhq",
       "live": [],
       "status": "standby"
+    }
+  ],
+  "calendar": [
+    {
+      "date": "2026-10-02",
+      "platform": "pinterest",
+      "kind": "video",
+      "title": "glam",
+      "status": "posted"
+    },
+    {
+      "date": "2026-10-02",
+      "platform": "pinterest",
+      "kind": "video",
+      "title": "glam",
+      "status": "posted"
     }
   ]
 }
