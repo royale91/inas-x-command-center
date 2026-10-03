@@ -1,64 +1,179 @@
 {
-  "updated": "2026-10-02T22:26:55.631836+00:00",
-  "goal": 50000,
-  "followers": 0,
-  "library": {
-    "total": 1243,
-    "videos": 803,
-    "photos": 440,
-    "duplicates": 416
+  "artist": "Inas X",
+  "album": "Certified Lover Girl",
+  "updated_at": "2026-10-03T00:14:03.549225+00:00",
+  "dry_run": true,
+  "analytics": {
+    "goal": 50000,
+    "followers": 0,
+    "posts": 3,
+    "likes_total": 0,
+    "likes_today": 0,
+    "comments_total": 0,
+    "by_platform": {},
+    "likes_7d": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "source": "pending"
   },
-  "lanes": {
-    "fan": 466,
-    "photos": 416,
-    "hq": 85,
-    "stream": 20,
-    "raw_long": 27,
-    "review": 228,
-    "album": 1
-  },
-  "pipeline": {
-    "cataloged": 0,
-    "sorted": 416,
-    "queued": 595,
-    "finished": 1,
-    "scheduled": 0,
-    "posted": 2
-  },
-  "songs": 6,
-  "pages": [
+  "connections": [
     {
-      "name": "@inasxlovergirls",
-      "live": [
-        "pinterest"
+      "page": "inasxlive",
+      "handle": "@inasxlive",
+      "profile": "inasxlive",
+      "platforms": [
+        "pinterest",
+        "instagram",
+        "tiktok",
+        "youtube",
+        "threads"
       ],
-      "status": "launching"
+      "connected": {},
+      "connect_url": "https://app.upload-post.com/manage-users"
     },
     {
-      "name": "@inasxlive",
-      "live": [],
-      "status": "standby"
+      "page": "inasxlovergirls",
+      "handle": "@inasxlovergirls",
+      "profile": "default",
+      "platforms": [
+        "pinterest",
+        "instagram",
+        "tiktok",
+        "youtube",
+        "threads"
+      ],
+      "connected": {
+        "pinterest": "inasxlovergirls",
+        "instagram": "inasxhq"
+      },
+      "connect_url": "https://app.upload-post.com/manage-users"
     },
     {
-      "name": "@inasxhq",
-      "live": [],
-      "status": "standby"
+      "page": "inasxhq",
+      "handle": "@inasxhq",
+      "profile": "inasxhq",
+      "platforms": [
+        "pinterest",
+        "instagram",
+        "tiktok",
+        "youtube",
+        "threads"
+      ],
+      "connected": {},
+      "connect_url": "https://app.upload-post.com/manage-users"
     }
   ],
-  "calendar": [
+  "library_total": 1659,
+  "library_photos": 714,
+  "library_videos": 945,
+  "duplicates": 416,
+  "posted": 3,
+  "ready": 1010,
+  "needs_review": 228,
+  "by_lane": {
+    "unsorted": 416,
+    "album": 1,
+    "fan": 466,
+    "hq": 85,
+    "photos": 416,
+    "raw_long": 27,
+    "review": 228,
+    "stream": 20
+  },
+  "by_status": {
+    "duplicate": 416,
+    "finished": 1,
+    "hold": 1,
+    "needs_review": 228,
+    "posted": 3,
+    "queued": 595,
+    "sorted": 415
+  },
+  "pipeline": [
     {
-      "date": "2026-10-02",
-      "platform": "pinterest",
-      "kind": "video",
-      "title": "glam",
-      "status": "posted"
+      "key": "catalog",
+      "name": "Catalog",
+      "verb": "fingerprinted",
+      "done": 1659
     },
     {
-      "date": "2026-10-02",
-      "platform": "pinterest",
-      "kind": "video",
-      "title": "glam",
-      "status": "posted"
+      "key": "dedupe",
+      "name": "Dedupe",
+      "verb": "dupes caught",
+      "done": 416
+    },
+    {
+      "key": "sort",
+      "name": "AI Sort",
+      "verb": "lane-sorted",
+      "done": 1010
+    },
+    {
+      "key": "finish",
+      "name": "Finish",
+      "verb": "rendered 9:16",
+      "done": 4
+    },
+    {
+      "key": "caption",
+      "name": "Caption",
+      "verb": "written",
+      "done": 3
+    },
+    {
+      "key": "schedule",
+      "name": "Schedule",
+      "verb": "queued to post",
+      "done": 0
+    },
+    {
+      "key": "post",
+      "name": "Post",
+      "verb": "live",
+      "done": 3
+    }
+  ],
+  "pages": [
+    {
+      "id": "inasxlive",
+      "handle": "@inasxlive",
+      "lane": "stream",
+      "enabled": true,
+      "per_day": 3,
+      "live_platforms": [],
+      "target_platforms": []
+    },
+    {
+      "id": "inasxlovergirls",
+      "handle": "@inasxlovergirls",
+      "lane": "fan",
+      "enabled": true,
+      "per_day": 3,
+      "live_platforms": [
+        "pinterest"
+      ],
+      "target_platforms": [
+        "instagram",
+        "tiktok",
+        "youtube",
+        "pinterest",
+        "threads"
+      ]
+    },
+    {
+      "id": "inasxhq",
+      "handle": "@inasxhq",
+      "lane": "hq",
+      "enabled": false,
+      "per_day": 2,
+      "live_platforms": [],
+      "target_platforms": []
     }
   ]
 }
