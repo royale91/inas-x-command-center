@@ -1,7 +1,7 @@
 {
   "artist": "Inas X",
   "album": "Certified Lover Girl",
-  "updated_at": "2026-10-03T00:14:03.549225+00:00",
+  "updated_at": "2026-10-04T16:26:06.205981+00:00",
   "dry_run": true,
   "analytics": {
     "goal": 50000,
@@ -34,7 +34,11 @@
         "youtube",
         "threads"
       ],
-      "connected": {},
+      "connected": {
+        "tiktok": "inasxlivex",
+        "instagram": "inasx.live",
+        "youtube": "@inasxlive"
+      },
       "connect_url": "https://app.upload-post.com/manage-users"
     },
     {
@@ -49,8 +53,10 @@
         "threads"
       ],
       "connected": {
+        "tiktok": "inasxlovergirls",
         "pinterest": "inasxlovergirls",
-        "instagram": "inasxhq"
+        "instagram": "inasxlovergirls",
+        "youtube": "@inasxlovergirls"
       },
       "connect_url": "https://app.upload-post.com/manage-users"
     },
@@ -65,7 +71,11 @@
         "youtube",
         "threads"
       ],
-      "connected": {},
+      "connected": {
+        "tiktok": "inasx_hq",
+        "instagram": "inasxhq",
+        "youtube": "@inasxhq"
+      },
       "connect_url": "https://app.upload-post.com/manage-users"
     }
   ],
@@ -74,7 +84,7 @@
   "library_videos": 945,
   "duplicates": 416,
   "posted": 3,
-  "ready": 1010,
+  "ready": 1008,
   "needs_review": 228,
   "by_lane": {
     "unsorted": 416,
@@ -93,7 +103,8 @@
     "needs_review": 228,
     "posted": 3,
     "queued": 595,
-    "sorted": 415
+    "scheduled": 2,
+    "sorted": 413
   },
   "pipeline": [
     {
@@ -112,7 +123,7 @@
       "key": "sort",
       "name": "AI Sort",
       "verb": "lane-sorted",
-      "done": 1010
+      "done": 1008
     },
     {
       "key": "finish",
@@ -130,7 +141,7 @@
       "key": "schedule",
       "name": "Schedule",
       "verb": "queued to post",
-      "done": 0
+      "done": 2
     },
     {
       "key": "post",
@@ -174,6 +185,134 @@
       "per_day": 2,
       "live_platforms": [],
       "target_platforms": []
+    }
+  ],
+  "calendar": [
+    {
+      "date": "2026-10-05",
+      "time": "09:55",
+      "platform": "pinterest",
+      "title": "confidence is the best outfit, lovergirls know this",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-05",
+      "time": "21:56",
+      "platform": "pinterest",
+      "title": "living my best life and lovergirls you should too",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-06",
+      "time": "15:02",
+      "platform": "pinterest",
+      "title": "passport full, heart fuller",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-06",
+      "time": "17:52",
+      "platform": "pinterest",
+      "title": "when your glam routine hits different",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-07",
+      "time": "10:44",
+      "platform": "pinterest",
+      "title": "dreaming of my next adventure. lovergirls, where would you take me?",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-07",
+      "time": "22:10",
+      "platform": "pinterest",
+      "title": "serving looks and confidence, that's the vibe",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-08",
+      "time": "09:16",
+      "platform": "pinterest",
+      "title": "selfie vibes",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-08",
+      "time": "13:11",
+      "platform": "pinterest",
+      "title": "living that main character energy, lovergirls",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-08",
+      "time": "17:20",
+      "platform": "pinterest",
+      "title": "feeling myself in this light",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-09",
+      "time": "13:42",
+      "platform": "pinterest",
+      "title": "inas x fit inspo - lovergirls this is how you do it",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-09",
+      "time": "18:30",
+      "platform": "pinterest",
+      "title": "feeling myself",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-09",
+      "time": "21:39",
+      "platform": "pinterest",
+      "title": "selfie confidence check",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-10",
+      "time": "09:33",
+      "platform": "pinterest",
+      "title": "jet set with inas x energy \u2661",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-10",
+      "time": "15:11",
+      "platform": "pinterest",
+      "title": "passport full of memories",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-10",
+      "time": "17:01",
+      "platform": "pinterest",
+      "title": "passport diaries: lovergirl edition",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-11",
+      "time": "10:12",
+      "platform": "pinterest",
+      "title": "glam girl aesthetic ft. inas x energy",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-11",
+      "time": "12:49",
+      "platform": "pinterest",
+      "title": "channeling inas x energy in everything we wear",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-11",
+      "time": "17:36",
+      "platform": "pinterest",
+      "title": "that girl energy",
+      "status": "scheduled"
     }
   ]
 }

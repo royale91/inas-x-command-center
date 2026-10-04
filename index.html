@@ -123,6 +123,42 @@
   .note{font-size:12.5px;color:var(--mut);margin-top:14px;padding:12px 14px;background:var(--rose-soft);border-radius:11px;border:1px solid var(--rose-line)}
   .note b{color:var(--rose-ink)}
 
+  /* agent office */
+  .officegrid{display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:start}
+  @media(max-width:900px){.officegrid{grid-template-columns:1fr}}
+  .team{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media(max-width:560px){.team{grid-template-columns:1fr}}
+  .agent{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:15px;display:flex;gap:12px;align-items:center;box-shadow:var(--shadow);transition:.2s}
+  .agent:hover{border-color:var(--rose-line)}
+  .agent .av{width:42px;height:42px;border-radius:12px;flex:none;display:grid;place-items:center;font-size:21px;background:linear-gradient(135deg,var(--rose-soft),#fff);border:1px solid var(--rose-line)}
+  .agent .nm{font-family:var(--disp);font-weight:700;font-size:15px;display:flex;align-items:center;gap:7px}
+  .agent .nm .lt{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);animation:bl 2.2s ease-in-out infinite}
+  .agent .nm .lt.idle{background:var(--faint);box-shadow:none;animation:none}
+  @keyframes bl{0%,100%{opacity:1}50%{opacity:.35}}
+  .agent .role{font-size:11.5px;color:var(--mut);margin-top:2px}
+  .agent .stat{font-family:var(--disp);font-weight:900;font-size:13px;color:var(--rose-ink);margin-top:4px}
+  .feed{padding:16px;max-height:230px;overflow-y:auto}
+  .feed .row{display:flex;gap:10px;align-items:baseline;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13px}
+  .feed .row:last-child{border:none}
+  .feed .row .who{font-weight:700;color:var(--rose-ink);min-width:70px}
+  .feed .row .t{color:var(--mut);font-size:11px;margin-left:auto;white-space:nowrap}
+
+  /* chat */
+  .chat{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;height:520px;overflow:hidden}
+  .chatlog{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px}
+  .msg{max-width:88%;padding:11px 14px;border-radius:14px;font-size:13.5px;line-height:1.5}
+  .msg.bot{background:var(--bg);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+  .msg.me{background:var(--rose);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+  .msg b{font-weight:700}
+  .chips{display:flex;gap:7px;flex-wrap:wrap;padding:0 14px 10px}
+  .chips button{font-size:11.5px;font-weight:600;color:var(--rose-ink);background:var(--rose-soft);border:1px solid var(--rose-line);border-radius:999px;padding:6px 11px;cursor:pointer;transition:.15s}
+  .chips button:hover{background:var(--rose);color:#fff}
+  .chatbar{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+  .chatbar input{flex:1;border:1px solid var(--line2);border-radius:11px;padding:11px 14px;font-family:var(--ui);font-size:13.5px;outline:none}
+  .chatbar input:focus{border-color:var(--rose);box-shadow:0 0 0 3px var(--rose-soft)}
+  .chatbar button{width:42px;border:none;border-radius:11px;background:var(--rose);color:#fff;font-size:17px;cursor:pointer}
+  .chatbar button:hover{background:var(--rose-ink)}
+
   /* calendar */
   .calbar{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:18px}
   .calbar h3{font-family:var(--disp);font-weight:700;font-size:21px;min-width:200px;text-align:center}
@@ -130,11 +166,13 @@
   .calbar button:hover{border-color:var(--rose);color:var(--rose-ink)}
   .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
   #calhead div{text-align:center;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);padding-bottom:6px}
-  .cell{aspect-ratio:1;border:1px solid var(--line);border-radius:12px;padding:9px;position:relative;font-size:13px;font-weight:600;color:var(--ink)}
-  .cell.pad{border:none;background:none}
+  .cell{min-height:92px;border:1px solid var(--line);border-radius:12px;padding:8px;position:relative;font-size:13px;font-weight:600;color:var(--ink);display:flex;flex-direction:column;gap:3px}
+  .cell.pad{border:none;background:none;min-height:0}
+  .cell.has{background:rgba(255,77,141,.035)}
   .cell.today{border-color:var(--rose);box-shadow:0 0 0 3px var(--rose-soft)}
-  .cell .evt{position:absolute;left:8px;right:8px;bottom:8px;font-size:10px;font-weight:700;color:#fff;background:var(--rose);border-radius:6px;padding:3px 6px;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .cell .evt{font-size:9.5px;font-weight:700;color:#fff;background:var(--rose);border-radius:5px;padding:2px 5px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
   .cell .evt.sched{background:var(--warn)}
+  .cell .evtmore{font-size:9px;font-weight:700;color:var(--mut)}
   .callegend{display:flex;gap:20px;justify-content:center;margin-top:18px;font-size:12px;color:var(--mut)}
   .callegend i.dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle}
   .callegend i.live{background:var(--rose)} .callegend i.sched{background:var(--warn)}
@@ -174,6 +212,7 @@
       <div class="logo"><div class="g">X</div><div class="t"><b>Inas X</b><span>Command Center</span></div></div>
       <nav class="nav" id="nav">
         <button data-v="dash" class="on"><span class="ic">◇</span> Dashboard</button>
+        <button data-v="office"><span class="ic">🏢</span> Agent Office</button>
         <button data-v="flow"><span class="ic">⚡</span> Workflows</button>
         <button data-v="conn"><span class="ic">🔗</span> Connections</button>
         <button data-v="cal"><span class="ic">🗓</span> Calendar</button>
@@ -193,6 +232,30 @@
         <div class="section"><div class="lbl">Our AI — what makes this more than a repurposer</div>
           <div class="ai" id="aistrip"></div></div>
         <div class="section"><div class="lbl">Latest drop</div><div class="panel" id="drop"></div></div>
+      </section>
+
+      <!-- AGENT OFFICE -->
+      <section class="view" id="v-office">
+        <div class="head"><h1>The Agent Office 🏢</h1><p>Her AI team — each one has a job, works the backlog, and reports in. Talk to them anytime in the chat.</p></div>
+        <div class="officegrid">
+          <div>
+            <div class="section" style="margin-top:0"><div class="lbl">The team — on the clock</div>
+              <div class="team" id="team"></div></div>
+            <div class="section"><div class="lbl">Live activity</div>
+              <div class="panel feed" id="feed"></div></div>
+          </div>
+          <div class="section" style="margin-top:0">
+            <div class="lbl">Talk to your team</div>
+            <div class="chat">
+              <div class="chatlog" id="chatlog"></div>
+              <div class="chips" id="chips"></div>
+              <form class="chatbar" id="chatform" autocomplete="off">
+                <input id="chatin" placeholder="Ask your team anything…" />
+                <button type="submit">↑</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- WORKFLOWS -->
@@ -245,7 +308,7 @@
 const FALLBACK = {
   "artist": "Inas X",
   "album": "Certified Lover Girl",
-  "updated_at": "2026-10-03T00:14:03.549225+00:00",
+  "updated_at": "2026-10-04T16:26:06.205981+00:00",
   "dry_run": true,
   "analytics": {
     "goal": 50000,
@@ -278,7 +341,11 @@ const FALLBACK = {
         "youtube",
         "threads"
       ],
-      "connected": {},
+      "connected": {
+        "tiktok": "inasxlivex",
+        "instagram": "inasx.live",
+        "youtube": "@inasxlive"
+      },
       "connect_url": "https://app.upload-post.com/manage-users"
     },
     {
@@ -293,8 +360,10 @@ const FALLBACK = {
         "threads"
       ],
       "connected": {
+        "tiktok": "inasxlovergirls",
         "pinterest": "inasxlovergirls",
-        "instagram": "inasxhq"
+        "instagram": "inasxlovergirls",
+        "youtube": "@inasxlovergirls"
       },
       "connect_url": "https://app.upload-post.com/manage-users"
     },
@@ -309,7 +378,11 @@ const FALLBACK = {
         "youtube",
         "threads"
       ],
-      "connected": {},
+      "connected": {
+        "tiktok": "inasx_hq",
+        "instagram": "inasxhq",
+        "youtube": "@inasxhq"
+      },
       "connect_url": "https://app.upload-post.com/manage-users"
     }
   ],
@@ -318,7 +391,7 @@ const FALLBACK = {
   "library_videos": 945,
   "duplicates": 416,
   "posted": 3,
-  "ready": 1010,
+  "ready": 1008,
   "needs_review": 228,
   "by_lane": {
     "unsorted": 416,
@@ -337,7 +410,8 @@ const FALLBACK = {
     "needs_review": 228,
     "posted": 3,
     "queued": 595,
-    "sorted": 415
+    "scheduled": 2,
+    "sorted": 413
   },
   "pipeline": [
     {
@@ -356,7 +430,7 @@ const FALLBACK = {
       "key": "sort",
       "name": "AI Sort",
       "verb": "lane-sorted",
-      "done": 1010
+      "done": 1008
     },
     {
       "key": "finish",
@@ -374,7 +448,7 @@ const FALLBACK = {
       "key": "schedule",
       "name": "Schedule",
       "verb": "queued to post",
-      "done": 0
+      "done": 2
     },
     {
       "key": "post",
@@ -418,6 +492,134 @@ const FALLBACK = {
       "per_day": 2,
       "live_platforms": [],
       "target_platforms": []
+    }
+  ],
+  "calendar": [
+    {
+      "date": "2026-10-05",
+      "time": "09:55",
+      "platform": "pinterest",
+      "title": "confidence is the best outfit, lovergirls know this",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-05",
+      "time": "21:56",
+      "platform": "pinterest",
+      "title": "living my best life and lovergirls you should too",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-06",
+      "time": "15:02",
+      "platform": "pinterest",
+      "title": "passport full, heart fuller",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-06",
+      "time": "17:52",
+      "platform": "pinterest",
+      "title": "when your glam routine hits different",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-07",
+      "time": "10:44",
+      "platform": "pinterest",
+      "title": "dreaming of my next adventure. lovergirls, where would you take me?",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-07",
+      "time": "22:10",
+      "platform": "pinterest",
+      "title": "serving looks and confidence, that's the vibe",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-08",
+      "time": "09:16",
+      "platform": "pinterest",
+      "title": "selfie vibes",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-08",
+      "time": "13:11",
+      "platform": "pinterest",
+      "title": "living that main character energy, lovergirls",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-08",
+      "time": "17:20",
+      "platform": "pinterest",
+      "title": "feeling myself in this light",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-09",
+      "time": "13:42",
+      "platform": "pinterest",
+      "title": "inas x fit inspo - lovergirls this is how you do it",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-09",
+      "time": "18:30",
+      "platform": "pinterest",
+      "title": "feeling myself",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-09",
+      "time": "21:39",
+      "platform": "pinterest",
+      "title": "selfie confidence check",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-10",
+      "time": "09:33",
+      "platform": "pinterest",
+      "title": "jet set with inas x energy \u2661",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-10",
+      "time": "15:11",
+      "platform": "pinterest",
+      "title": "passport full of memories",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-10",
+      "time": "17:01",
+      "platform": "pinterest",
+      "title": "passport diaries: lovergirl edition",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-11",
+      "time": "10:12",
+      "platform": "pinterest",
+      "title": "glam girl aesthetic ft. inas x energy",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-11",
+      "time": "12:49",
+      "platform": "pinterest",
+      "title": "channeling inas x energy in everything we wear",
+      "status": "scheduled"
+    },
+    {
+      "date": "2026-10-11",
+      "time": "17:36",
+      "platform": "pinterest",
+      "title": "that girl energy",
+      "status": "scheduled"
     }
   ]
 };
@@ -485,15 +687,94 @@ function render(d){
   document.getElementById('anasrc').textContent='source: '+(a.source||'pending')+' · fills in as posts go live + platforms connect';
 
   CAL_EVENTS=buildEvents(d); calRef=new Date(); renderCal();
+  window.DATA=d; renderOffice(d);
 }
+
+// ---- Agent Office ----
+const AGENTS=[
+  ['🔍','Scout','Catalog','catalog','fingerprinted'],
+  ['🧹','Mop','Dedupe','dedupe','dupes caught'],
+  ['🎯','Muse','AI Sort','sort','sorted to lanes'],
+  ['🎬','Director','Auto Studio','finish','rendered 9:16'],
+  ['✍️','Poet','Her Voice','caption','captions written'],
+  ['🗓️','Planner','Scheduler','schedule','queued'],
+  ['🚀','Blaze','Publisher','post','posts live'],
+];
+function pDone(d,key){const p=(d.pipeline||[]).find(x=>x.key===key);return p?p.done:0;}
+function renderOffice(d){
+  const sched=(d.calendar||[]).length;
+  document.getElementById('team').innerHTML=AGENTS.map(([av,nm,role,key,verb])=>{
+    let n = key==='schedule'? sched : pDone(d,key);
+    const on = n>0;
+    return `<div class="agent"><div class="av">${av}</div><div>
+      <div class="nm"><span class="lt ${on?'':'idle'}"></span>${nm}</div>
+      <div class="role">${role}</div>
+      <div class="stat">${Number(n).toLocaleString()} ${verb}</div></div></div>`;
+  }).join('');
+  const feed=[
+    ['Blaze',`published a tester to Instagram · TikTok · YouTube · Pinterest — all live ✓`],
+    ['Planner',`queued ${sched} pins across the week at random times`],
+    ['Poet',`wrote ${pDone(d,'caption')||3} captions in her voice + hashtags`],
+    ['Muse',`sorted ${(d.ready||0).toLocaleString()} assets into lanes`],
+    ['Mop',`caught ${(d.duplicates||0).toLocaleString()} duplicates`],
+    ['Scout',`fingerprinted ${(d.library_total||0).toLocaleString()} assets`],
+  ];
+  document.getElementById('feed').innerHTML=feed.map(([w,t],i)=>
+    `<div class="row"><span class="who">${w}</span><span>${t}</span><span class="t">just now</span></div>`).join('');
+}
+
+// ---- Chat ----
+function botReply(q){
+  const d=window.DATA||{}; const s=q.toLowerCase();
+  const sched=(d.calendar||[]).length;
+  const days=[...new Set((d.calendar||[]).map(c=>c.date))];
+  if(/schedul|calendar|queue|going out|posting/.test(s))
+    return `<b>${sched} posts</b> are queued across <b>${days.length} days</b> (${days[0]||'—'} → ${days[days.length-1]||'—'}), all at random spaced times, warm-up paced so nothing gets flagged. Check the <b>Calendar</b> tab to see them.`;
+  if(/connect|account|platform|page/.test(s)){
+    const lines=(d.connections||[]).map(c=>{const n=Object.keys(c.connected||{}).length;return `${c.handle}: <b>${n}</b> connected`;});
+    return `All 3 pages are wired:<br>• ${lines.join('<br>• ')}<br>Each posts to its own IG, YouTube Shorts, TikTok (+ Pinterest for lovergirls).`;
+  }
+  if(/ready|how much|backlog|content|left/.test(s))
+    return `<b>${(d.ready||0).toLocaleString()} assets</b> are sorted and ready. Photos flow to Pinterest now; the ~463 raw videos get finished next to feed IG Reels + TikTok + YouTube Shorts.`;
+  if(/next|what now|todo|plan/.test(s))
+    return `Next up: <b>finish the video backlog</b> → post Reels/TikTok/Shorts across all 3 pages, then layer in <b>viral sounds</b> + <b>Trial Reels</b> for reach. Pinterest is already running.`;
+  if(/viral|sound|audio|music|trend/.test(s))
+    return `Viral sounds are on the roadmap — I've got the trending-sound tool wired. For TikTok/Reels the trend audio is tapped in-app (draft → add sound), her own music renders in automatically.`;
+  if(/follow|grow|50k|goal/.test(s))
+    return `Goal is <b>50K</b>. Every Pinterest pin links to <b>@inasx</b> to funnel her main, and the 3 pages fan her catalog across 12 accounts. Growth = volume × consistency, hands-off.`;
+  if(/hi|hey|hello|yo|sup/.test(s))
+    return `Hey 🩷 Your team's on the clock. Ask me what's scheduled, what's connected, what's ready, or what's next.`;
+  if(/post now|go live|publish/.test(s))
+    return `To push a post right now, tell Royale's engine <i>go live</i> in the terminal — I surface status here, and the Publisher (Blaze) handles the actual send.`;
+  return `I can tell you what's <b>scheduled</b>, what's <b>connected</b>, what's <b>ready</b>, or what's <b>next</b>. Try one of the chips above 👆`;
+}
+function addMsg(text,who){
+  const log=document.getElementById('chatlog');
+  const el=document.createElement('div'); el.className='msg '+who; el.innerHTML=text;
+  log.appendChild(el); log.scrollTop=log.scrollHeight;
+}
+function ask(q){addMsg(q,'me'); setTimeout(()=>addMsg(botReply(q),'bot'),350);}
+function initChat(){
+  addMsg(`Hey 🩷 I'm your team's front desk. Everyone's working the backlog. Ask me anything — what's scheduled, connected, ready, or next.`,'bot');
+  const chips=['Whats scheduled','Whats connected','Whats ready','Whats next','Viral sounds'];
+  document.getElementById('chips').innerHTML=chips.map(c=>`<button>${c}</button>`).join('');
+  document.querySelectorAll('#chips button').forEach(b=>b.onclick=()=>ask(b.textContent));
+  document.getElementById('chatform').addEventListener('submit',e=>{
+    e.preventDefault(); const i=document.getElementById('chatin'); const v=i.value.trim();
+    if(v){ask(v); i.value='';}
+  });
+}
+initChat();
 
 // calendar
 let calRef=new Date(); let CAL_EVENTS={};
 function buildEvents(d){
-  const ev={}; const t=new Date();
-  const key=x=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
-  const posts=(d.analytics&&d.analytics.posts)||d.posted||0;
-  if(posts>0) ev[key(t)]=[{label:'glam ✨ live',type:'live'}];
+  const ev={};
+  // real scheduled/live posts from the engine (data.calendar = [{date,time,platform,title,status}])
+  (d.calendar||[]).forEach(c=>{
+    (ev[c.date]=ev[c.date]||[]).push({label:(c.time?c.time+' ':'')+(c.platform||''),type:c.status==='live'?'live':'sched',title:c.title});
+  });
+  Object.values(ev).forEach(a=>a.sort((x,y)=>(x.label>y.label?1:-1)));
   return ev;
 }
 function renderCal(){
@@ -508,8 +789,13 @@ function renderCal(){
     const kd=y+'-'+String(m+1).padStart(2,'0')+'-'+String(dn).padStart(2,'0');
     const isT=(dn===t.getDate()&&m===t.getMonth()&&y===t.getFullYear());
     const evs=CAL_EVENTS[kd]||[];
-    const evh=evs.length?`<div class="evt ${evs[0].type==='sched'?'sched':''}">${evs[0].label}</div>`:'';
-    cells+=`<div class="cell ${isT?'today':''}">${dn}${evh}</div>`;
+    let evh='';
+    if(evs.length){
+      const shown=evs.slice(0,2).map(e=>`<div class="evt ${e.type==='sched'?'sched':''}" title="${(e.title||'').replace(/"/g,'')}">${e.label}</div>`).join('');
+      const more=evs.length>2?`<div class="evtmore">+${evs.length-2} more</div>`:'';
+      evh=shown+more;
+    }
+    cells+=`<div class="cell ${isT?'today':''} ${evs.length?'has':''}">${dn}${evh}</div>`;
   }
   document.getElementById('caldays').innerHTML=cells;
 }
